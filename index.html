@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RÉVISION DROIT — Partiels S6</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0c;
+  --surface: #111115;
+  --card: #16161c;
+  --border: #2a2a35;
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --crimson: #9b1c1c;
+  --crimson-bright: #dc2626;
+  --text: #e8e8f0;
+  --muted: #7a7a8a;
+  --accent: #4f46e5;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.hero {
+  position: relative;
+  padding: 60px 24px 40px;
+  text-align: center;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -100px; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(201,168,76,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.2s;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 8vw, 64px);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 12px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.4s;
+}
+.hero h1 span { color: var(--gold); }
+.hero-sub {
+  color: var(--muted);
+  font-size: 14px;
+  letter-spacing: 1px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.6s;
+}
+.gold-line {
+  width: 60px; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 24px auto;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.8s;
+}
+
+/* NAV */
+.nav {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 16px 40px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 1s;
+}
+.nav-btn {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-btn:hover, .nav-btn.active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(201,168,76,0.06);
+}
+
+/* MODULES */
+.module {
+  display: none;
+  padding: 0 16px 80px;
+  max-width: 800px;
+  margin: 0 auto;
+  animation: fadeUp 0.4s ease forwards;
+}
+.module.active { display: block; }
+
+/* SECTION TITLE */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.section-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+/* CARDS */
+.cards-grid {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+.card:hover { border-color: rgba(201,168,76,0.4); }
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.card-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 1px;
+  background: rgba(201,168,76,0.1);
+  padding: 3px 8px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.card-title {
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--text);
+}
+.card-body {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.card-body strong {
+  color: var(--text);
+  font-weight: 500;
+}
+.card-body .hl {
+  color: var(--gold-light);
+  font-weight: 500;
+}
+.card-body .red {
+  color: #f87171;
+  font-weight: 500;
+}
+.card-body .tag {
+  display: inline-block;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.3);
+  color: var(--gold);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  margin: 2px;
+  letter-spacing: 1px;
+}
+.card-body .tag.red {
+  background: rgba(220,38,38,0.1);
+  border-color: rgba(220,38,38,0.3);
+  color: #f87171;
+}
+.card-body .tag.blue {
+  background: rgba(79,70,229,0.1);
+  border-color: rgba(79,70,229,0.3);
+  color: #818cf8;
+}
+
+/* COLLAPSIBLE */
+.collapsible .card-body { display: none; }
+.collapsible.open .card-body { display: block; }
+.collapsible .card-head::after {
+  content: '+';
+  margin-left: auto;
+  color: var(--gold);
+  font-size: 18px;
+  font-weight: 300;
+}
+.collapsible.open .card-head::after { content: '−'; }
+
+/* ALERT BOXES */
+.alert {
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 12px 0;
+  font-size: 13px;
+  line-height: 1.6;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.alert.gold { background: rgba(201,168,76,0.08); border-left: 3px solid var(--gold); }
+.alert.red { background: rgba(220,38,38,0.08); border-left: 3px solid var(--crimson-bright); }
+.alert.blue { background: rgba(79,70,229,0.08); border-left: 3px solid var(--accent); }
+
+/* QUIZ */
+.quiz-question {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+.quiz-q {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  line-height: 1.6;
+  color: var(--text);
+}
+.quiz-options { display: grid; gap: 8px; }
+.quiz-opt {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+  font-family: 'DM Sans', sans-serif;
+}
+.quiz-opt:hover { border-color: var(--gold); color: var(--text); }
+.quiz-opt.correct { border-color: #22c55e; color: #22c55e; background: rgba(34,197,94,0.08); }
+.quiz-opt.wrong { border-color: var(--crimson-bright); color: #f87171; background: rgba(220,38,38,0.08); }
+.quiz-opt:disabled { cursor: default; }
+.quiz-explain {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: rgba(201,168,76,0.06);
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+  display: none;
+}
+.quiz-explain.show { display: block; }
+.quiz-explain strong { color: var(--gold); }
+
+/* TIMELINE */
+.timeline { position: relative; padding-left: 28px; margin-bottom: 32px; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px; top: 4px; bottom: 4px;
+  width: 1px;
+  background: linear-gradient(180deg, var(--gold), transparent);
+}
+.tl-item { position: relative; margin-bottom: 20px; }
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -24px; top: 6px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 8px rgba(201,168,76,0.4);
+}
+.tl-year {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+}
+.tl-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+.tl-text strong { color: var(--text); }
+
+/* COMPARISON TABLE */
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0 32px;
+  font-size: 12px;
+}
+.cmp-table th {
+  background: rgba(201,168,76,0.1);
+  color: var(--gold);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 10px 14px;
+  text-align: left;
+  border: 1px solid var(--border);
+}
+.cmp-table td {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  line-height: 1.5;
+  vertical-align: top;
+}
+.cmp-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* PROGRESS */
+.score-bar {
+  background: var(--border);
+  border-radius: 20px;
+  height: 4px;
+  margin: 16px 0 8px;
+  overflow: hidden;
+}
+.score-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  border-radius: 20px;
+  transition: width 0.5s ease;
+}
+.score-txt {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  text-align: right;
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(16px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* DIVIDER */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 32px 0;
+}
+
+/* FORMULA */
+.formula {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 12px 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--gold-light);
+  line-height: 1.8;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 40px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  border-top: 1px solid var(--border);
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Partiel · Semestre 6 · 2026</div>
+  <h1>RÉVISION<br><span>DROIT</span></h1>
+  <div class="hero-sub">4 matières · Fiches · Quiz · Points clés</div>
+  <div class="gold-line"></div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav-btn active" onclick="showModule('rgo')">RGO</button>
+  <button class="nav-btn" onclick="showModule('ds')">Droit Sociétés</button>
+  <button class="nav-btn" onclick="showModule('dip')">DIP</button>
+  <button class="nav-btn" onclick="showModule('td')">Théorie Droit</button>
+  <button class="nav-btn" onclick="showModule('quiz')">⚡ Quiz</button>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- MODULE 1 : RÉGIME GÉNÉRAL OBLIGATIONS  -->
+<!-- ═══════════════════════════════════════ -->
+<div class="module active" id="module-rgo">
+
+  <div class="section-title">Régime Général des Obligations</div>
+  <div class="section-meta">M. MAETZ · Articles 1304 et s. C.Civ · Ordonnance 10 fév. 2016</div>
+
+  <!-- DÉFINITION -->
+  <div class="alert gold"><div class="alert-icon">⚖️</div><div><strong>Définition fondamentale :</strong> L'obligation est le <span style="color:var(--gold-light)">lien de droit</span> par lequel une personne (<em>débiteur</em>) est tenue envers une autre (<em>créancier</em>) d'une <strong>prestation ou d'une abstention</strong>. Obligation civile = exécution forcée possible. Obligation naturelle = non imposable en justice (peut muter en civile : arrêt Frata 1995).</div></div>
+
+  <hr class="divider">
+
+  <!-- PARTIE 1 : MODALITÉS -->
+  <div class="section-title">1. Les Modalités</div>
+  <div class="section-meta">Conditions · Termes · Pluralité</div>
+
+  <div class="cards-grid">
+
+    <!-- CONDITION -->
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">ART. 1304</span>
+        <span class="card-title">L'Obligation Conditionnelle</span>
+      </div>
+      <div class="card-body">
+        <p><strong>Définition :</strong> Dépend d'un événement <span class="hl">futur et incertain</span>.</p>
+        <br>
+        <p><strong>Condition suspensive :</strong> l'obligation ne prend effet <em>qu'à la réalisation</em> de l'événement.</p>
+        <p><strong>Condition résolutoire :</strong> l'accomplissement <em>anéantit</em> l'obligation.</p>
+        <br>
+        <p><strong>Validité :</strong> 3 conditions cumulatives :</p>
+        <p>① Événement futur · ② Événement incertain · ③ Licite et possible</p>
+        <br>
+        <div class="alert red"><div class="alert-icon">🚫</div><div><strong>Condition potestative interdite</strong> (art. 1304-2) : nulle si la réalisation dépend de la <em>seule</em> volonté du débiteur. Ex : <em>"je vends si j'en ai envie"</em> → NUL.</div></div>
+        <br>
+        <p><strong>3 catégories :</strong></p>
+        <p><span class="tag">Casuelle</span> dépend d'un événement extérieur</p>
+        <p><span class="tag">Potestative</span> dépend de la volonté d'une partie → nulle si côté débiteur</p>
+        <p><span class="tag">Mixte</span> dépend de la volonté + éléments extérieurs → valide</p>
+      </div>
+    </div>
+
+    <!-- TERME -->
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">ART. 1305</span>
+        <span class="card-title">L'Obligation à Terme</span>
+      </div>
+      <div class="card-body">
+        <p><strong>Définition :</strong> Événement futur et <span class="hl">certain</span> (≠ condition : incertain).</p>
+        <br>
+        <p><strong>Terme suspensif :</strong> diffère l'exigibilité</p>
+        <p><strong>Terme extinctif :</strong> met fin à l'obligation</p>
+        <br>
+        <div class="alert gold"><div class="alert-icon">💡</div><div>Le décès est un <strong>terme</strong> (certain dans sa survenance, incertain dans la date) — pas une condition.</div></div>
+        <br>
+        <p><strong>Déchéance du terme :</strong> le débiteur perd le bénéfice du terme si : déconfiture, refus de garanties promises, diminution des sûretés.</p>
+      </div>
+    </div>
+
+    <!-- PLURALITÉ -->
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">ART. 1309</span>
+        <span class="card-title">Obligations Plurales</span>
+      </div>
+      <div class="card-body">
+        <p><strong>Obligations conjointes :</strong> chaque débiteur ne doit que sa part → divisible.</p>
+        <br>
+        <p><strong>Solidarité passive :</strong> le créancier peut exiger le tout de n'importe quel codébiteur. Sources : loi ou convention. Effets principaux : interruption de prescription, mise en demeure d'un seul vaut pour tous.</p>
+        <br>
+        <p><strong>Solidarité active :</strong> n'importe quel cocréancier peut exiger le tout.</p>
+        <br>
+        <p><strong>Obligation in solidum :</strong> JP — même effet que solidarité mais sans source légale/conventionnelle (responsabilité civile ++).</p>
+        <br>
+        <p><strong>Obligation indivisible :</strong> l'objet est insusceptible de division. Chaque partie peut réclamer l'intégralité même sans solidarité.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <!-- PARTIE 2 : OPÉRATIONS SUR OBLIGATIONS -->
+  <div class="section-title">2. Opérations sur Obligations</div>
+  <div class="section-meta">Cession · Novation · Subrogation</div>
+
+  <div class="cards-grid">
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">ART. 1321</span>
+        <span class="card-title">Cession de Créance</span>
+      </div>
+      <div class="card-body">
+        <p>Le créancier (<em>cédant</em>) transfère sa créance à un tiers (<em>cessionnaire</em>). Le débiteur cédé n'a pas à consentir.</p>
+        <br>
+        <p><strong>Opposabilité :</strong> depuis 2016, la cession est opposable aux tiers dès la <span class="hl">date certaine</span> (remplace l'ancienne signification par huissier de l'art. 1690).</p>
+        <p>Opposable au débiteur : dès notification ou prise de connaissance.</p>
+        <br>
+        <p><strong>Garantie :</strong> le cédant garantit l'existence de la créance, pas sa solvabilité (sauf garantie de recouvrement stipulée).</p>
+      </div>
+    </div>
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">ART. 1329</span>
+        <span class="card-title">Subrogation Personnelle</span>
+      </div>
+      <div class="card-body">
+        <p>Un tiers qui paie à la place du débiteur est <span class="hl">subrogé dans les droits du créancier</span>.</p>
+        <br>
+        <p><strong>Subrogation légale :</strong> automatique (ex. : co-débiteur solidaire qui paye, caution qui s'acquitte).</p>
+        <p><strong>Subrogation conventionnelle :</strong> par le créancier (art. 1346-1) ou par le débiteur (art. 1346-2).</p>
+        <br>
+        <div class="alert gold"><div class="alert-icon">⚠️</div><div><strong>≠ cession :</strong> la subrogation éteint partiellement la dette originelle ; la cession de créance la transmet intacte.</div></div>
+      </div>
+    </div>
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">ART. 1329</span>
+        <span class="card-title">Novation</span>
+      </div>
+      <div class="card-body">
+        <p>Substitution d'une obligation nouvelle à l'ancienne qui s'éteint. Exige une <span class="hl">animus novandi</span> (intention de nover).</p>
+        <br>
+        <p><strong>3 formes :</strong></p>
+        <p>① Changement d'objet · ② Changement de débiteur (délégation) · ③ Changement de créancier</p>
+        <br>
+        <p><strong>Effet :</strong> les sûretés attachées à l'ancienne obligation disparaissent (sauf clause de report).</p>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <!-- PARTIE 3 : EXTINCTION -->
+  <div class="section-title">3. Extinction de l'Obligation</div>
+  <div class="section-meta">Paiement · Compensation · Prescription</div>
+
+  <div class="cards-grid">
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">ART. 1342</span>
+        <span class="card-title">Le Paiement</span>
+      </div>
+      <div class="card-body">
+        <p>Mode normal d'extinction = exécution volontaire de l'obligation.</p>
+        <br>
+        <p><strong>Qui paie ?</strong> Le débiteur, mais aussi un tiers (même à l'insu du débiteur — art. 1342-1).</p>
+        <p><strong>À qui ?</strong> Au créancier ou à son représentant. Paiement à un tiers non habilité = inopposable sauf enrichissement du créancier.</p>
+        <br>
+        <p><strong>Imputation des paiements :</strong> le débiteur choisit d'abord, puis le créancier, puis la loi impute sur la dette la plus onéreuse.</p>
+        <br>
+        <div class="alert blue"><div class="alert-icon">📌</div><div><strong>Mise en demeure :</strong> fait courir les intérêts moratoires et met les risques à la charge du débiteur (art. 1231-6).</div></div>
+      </div>
+    </div>
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">ART. 1347</span>
+        <span class="card-title">Compensation</span>
+      </div>
+      <div class="card-body">
+        <p>Extinction simultanée de deux dettes réciproques jusqu'à concurrence.</p>
+        <br>
+        <p><strong>Conditions :</strong> dettes réciproques + certaines + liquides + exigibles.</p>
+        <br>
+        <p><strong>Compensation légale :</strong> joue de plein droit dès réunion des conditions.</p>
+        <p><strong>Compensation judiciaire :</strong> ordonnée par le juge si toutes conditions non réunies.</p>
+        <p><strong>Compensation conventionnelle :</strong> accord des parties.</p>
+      </div>
+    </div>
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">ART. 2224</span>
+        <span class="card-title">Prescription Extinctive</span>
+      </div>
+      <div class="card-body">
+        <p><strong>Délai de droit commun :</strong> <span class="hl">5 ans</span> à compter du jour où le titulaire a connu ou aurait dû connaître les faits.</p>
+        <br>
+        <p><strong>Délais spéciaux :</strong></p>
+        <p>· 10 ans (dommages corporels)</p>
+        <p>· 30 ans (réels immobiliers)</p>
+        <p>· 2 ans (action des professionnels contre consommateurs)</p>
+        <br>
+        <p><strong>Interruption :</strong> remet le délai à zéro (demande en justice, acte d'exécution forcée, reconnaissance de dette).</p>
+        <p><strong>Suspension :</strong> arrête le cours du délai temporairement (minorité, médiation en cours...).</p>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <!-- ACTIONS DU CRÉANCIER -->
+  <div class="section-title">4. Actions du Créancier</div>
+
+  <div class="cards-grid">
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">ART. 1341-1</span>
+        <span class="card-title">Action Oblique & Paulienne</span>
+      </div>
+      <div class="card-body">
+        <p><strong>Action oblique :</strong> le créancier exerce les droits que son débiteur néglige (ex. : action en nullité que le débiteur ne forme pas). Bénéfice profite à tous les créanciers.</p>
+        <br>
+        <p><strong>Action paulienne :</strong> annuler les actes frauduleux du débiteur appauvrissant son patrimoine. Conditions : créance antérieure à l'acte + fraude du débiteur (+ complicité du tiers si acte à titre onéreux).</p>
+        <br>
+        <p><strong>Action directe :</strong> le créancier agit directement contre le débiteur de son débiteur (ex. : sous-traitant contre maître de l'ouvrage). Limitée aux cas légaux ou jurisprudentiels.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- FIN MODULE RGO -->
+
+<!-- ═══════════════════════════════════════ -->
+<!-- MODULE 2 : DROIT DES SOCIÉTÉS          -->
+<!-- ═══════════════════════════════════════ -->
+<div class="module" id="module-ds">
+
+  <div class="section-title">Droit des Sociétés</div>
+  <div class="section-meta">N. DUCHON-DORIS · Art. 1832 C.Civ · Loi 24 juil. 1966</div>
+
+  <div class="alert gold"><div class="alert-icon">⚖️</div><div><strong>Définition art. 1832 C.Civ :</strong> La société est instituée par deux ou plusieurs personnes qui conviennent par un contrat d'affecter à une entreprise commune des biens ou leur industrie en vue de <span style="color:var(--gold-light)">partager le bénéfice ou de profiter de l'économie</span> qui pourra en résulter. Les associés s'engagent à contribuer aux pertes.</div></div>
+
+  <hr class="divider">
+
+  <div class="section-title">1. Éléments Constitutifs</div>
+
+  <div class="cards-grid">
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">4 ÉLÉMENTS</span>
+        <span class="card-title">Conditions de la Société</span>
+      </div>
+      <div class="card-body">
+        <p><strong>① Contrat :</strong> la société est <em>instituée</em> par un contrat (pas définie comme un contrat → naissance d'une personne morale distincte).</p>
+        <br>
+        <p><strong>② Pluralité d'associés :</strong> minimum 2 en principe. Exceptions légales : EURL, SASU, sociétés nationalisées.</p>
+        <br>
+        <p><strong>③ Apports :</strong> chaque associé apporte (art. 1843-3). 3 types :</p>
+        <p><span class="tag">En numéraire</span> argent</p>
+        <p><span class="tag">En nature</span> bien corporel/incorporel</p>
+        <p><span class="tag">En industrie</span> compétence/travail</p>
+        <br>
+        <p><strong>④ But lucratif :</strong> partage de bénéfices OU recherche d'économies (depuis loi 1978). Distingue la société de l'association.</p>
+      </div>
+    </div>
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">ART. 1833</span>
+        <span class="card-title">Objet Social & Intérêt Social</span>
+      </div>
+      <div class="card-body">
+        <p><strong>Objet social :</strong> ensemble des activités déterminées par les statuts. Gouverne le principe de <span class="hl">spécialité</span>. Doit être licite.</p>
+        <br>
+        <p><strong>Intérêt social (loi PACTE 2019) :</strong> art. 1833 al. 2 → la société est gérée dans son intérêt social, en prenant en considération les <em>enjeux sociaux et environnementaux</em>.</p>
+        <br>
+        <p><strong>Raison d'être :</strong> art. 1835 → les statuts peuvent préciser des principes dont la société se dote (objectif optionnel).</p>
+        <br>
+        <div class="alert blue"><div class="alert-icon">📌</div><div><strong>Société à mission (label) :</strong> art. L210-10 C.com → si la raison d'être inclut des objectifs sociaux/environnementaux, vérifiés par un OTI.</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-title">2. Classifications</div>
+
+  <table class="cmp-table">
+    <tr>
+      <th>Type</th>
+      <th>Caractéristiques</th>
+      <th>Exemples</th>
+    </tr>
+    <tr>
+      <td><strong>Société de personnes</strong></td>
+      <td>Intuitu personae fort · Responsabilité illimitée · Fiscalement transparente (IS sur associés)</td>
+      <td>SNC · Sociétés civiles</td>
+    </tr>
+    <tr>
+      <td><strong>Société de capitaux</strong></td>
+      <td>Responsabilité limitée à l'apport · Actions librement cessibles · IS au taux 25%</td>
+      <td>SA · SAS · SCA</td>
+    </tr>
+    <tr>
+      <td><strong>Hybride</strong></td>
+      <td>Mélange des deux régimes</td>
+      <td>SARL · SCA</td>
+    </tr>
+    <tr>
+      <td><strong>Civile vs Commerciale</strong></td>
+      <td>Commerciale = par forme (art. L210-1) ou activité</td>
+      <td>SCI (civile) · SARL (commerciale)</td>
+    </tr>
+  </table>
+
+  <hr class="divider">
+
+  <div class="section-title">3. Validité & Nullités</div>
+
+  <div class="cards-grid">
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">ORD. 12 MARS 2025</span>
+        <span class="card-title">Réforme des Nullités</span>
+      </div>
+      <div class="card-body">
+        <p>Désormais art. 1844-10 C.Civ : la nullité de la société ne peut résulter que de :</p>
+        <br>
+        <p><span class="tag red">①</span> <strong>Incapacité de TOUS les fondateurs</strong></p>
+        <p><span class="tag red">②</span> <strong>Violation du nombre minimal de 2 associés</strong></p>
+        <br>
+        <div class="alert red"><div class="alert-icon">⚠️</div><div><strong>Rupture importante :</strong> l'illicéité de l'objet social statutaire n'est plus une cause de nullité → la clause est réputée non écrite et la société dissoute si privée d'objet.</div></div>
+        <br>
+        <p><strong>Vices du consentement :</strong> entraînent uniquement la nullité de <em>l'apport</em> concerné. Nullité de la société seulement si tous les apports sont touchés.</p>
+        <br>
+        <p><strong>Erreur valide en sociétés de personnes :</strong> erreur sur la personne de l'associé si intuitu personae déterminant.</p>
+      </div>
+    </div>
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">ART. 1844-5</span>
+        <span class="card-title">Vie et Dissolution</span>
+      </div>
+      <div class="card-body">
+        <p><strong>Naissance :</strong> immatriculation au RNE → confère la personnalité morale.</p>
+        <br>
+        <p><strong>Causes de dissolution :</strong></p>
+        <p>· Arrivée du terme · Réalisation ou extinction de l'objet social</p>
+        <p>· Dissolution judiciaire (mésentente grave, juste motif)</p>
+        <p>· Décision des associés</p>
+        <br>
+        <p><strong>Société en participation :</strong> société purement contractuelle, sans immatriculation, donc sans personnalité morale.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-title">4. Sources & Tendances</div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">1804</div>
+      <div class="tl-text">Code civil — définition initiale : groupement + contrat + partage de bénéfice.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1966</div>
+      <div class="tl-text"><strong>Loi du 24 juillet :</strong> grande réforme. Naissance = immatriculation. Dirigeants engagent la société même hors objet social.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1978</div>
+      <div class="tl-text">Ajout de la "recherche d'économies" au but lucratif. Création de l'EURL.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2019</div>
+      <div class="tl-text"><strong>Loi PACTE :</strong> intérêt social (enjeux sociaux/env.), raison d'être, société à mission.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2025</div>
+      <div class="tl-text"><strong>Ordonnance 12 mars :</strong> réforme des nullités — causes réduites à 2 seulement.</div>
+    </div>
+  </div>
+
+</div>
+<!-- FIN MODULE DS -->
+
+<!-- ═══════════════════════════════════════ -->
+<!-- MODULE 3 : DROIT INTERNATIONAL PUBLIC  -->
+<!-- ═══════════════════════════════════════ -->
+<div class="module" id="module-dip">
+
+  <div class="section-title">Droit International Public</div>
+  <div class="section-meta">T. DEMARIA · Parties II & ss. · CIJ · CDI</div>
+
+  <hr class="divider">
+
+  <div class="section-title">1. Les Sujets du DI</div>
+
+  <div class="cards-grid">
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">CONVENTION MONTEVIDEO 1933</span>
+        <span class="card-title">Critères de l'État</span>
+      </div>
+      <div class="card-body">
+        <p>4 conditions <span class="hl">cumulatives</span> :</p>
+        <br>
+        <p><span class="tag">①</span> <strong>Population permanente</strong> — lien de nationalité, aucun seuil minimal</p>
+        <p><span class="tag">②</span> <strong>Territoire déterminé</strong> — corps de l'État (Carré de Malberg). Comprend sol, mer territoriale (12 M), espace aérien</p>
+        <p><span class="tag">③</span> <strong>Gouvernement</strong> — autorité effective (peu importe la forme : démocratique, autoritaire, tribal). Affaire Sahara occidental 1964</p>
+        <p><span class="tag">④</span> <strong>Capacité à entrer en relations internationales</strong> = souveraineté externe</p>
+        <br>
+        <div class="alert gold"><div class="alert-icon">⚖️</div><div><strong>Souveraineté = élément central.</strong> Île de Palmas (1928) : "l'indépendance relativement à une partie du globe est le droit d'y exercer, à l'exclusion de tout autre État, les fonctions étatiques."</div></div>
+      </div>
+    </div>
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">THÉORIE</span>
+        <span class="card-title">Reconnaissance de l'État</span>
+      </div>
+      <div class="card-body">
+        <p><strong>Théorie constitutive :</strong> l'État n'existe que s'il est reconnu → critiquée (dépend de la volonté des tiers).</p>
+        <br>
+        <p><strong>Théorie déclarative :</strong> <span class="hl">majoritaire</span> — l'État existe dès que les critères objectifs sont réunis. La reconnaissance rend l'existence <em>opposable</em> aux autres États. Commission Badinter (Yougoslavie).</p>
+        <br>
+        <div class="alert red"><div class="alert-icon">⚠️</div><div><strong>Reconnaissance interdite :</strong> Doctrine Stimson (1932) + Rés. AGNU 2014 — aucun État ne peut reconnaître une situation née d'un recours illicite à la force (ex. Crimée).</div></div>
+        <br>
+        <p><strong>Modes de naissance :</strong> Fusion · Scission/dissolution · Absorption · Sécession (décolonisation : Rés. 1514 — droit à l'autodétermination)</p>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-title">2. Compétences de l'État</div>
+
+  <table class="cmp-table">
+    <tr><th>Compétence</th><th>Critère</th><th>Portée</th></tr>
+    <tr><td><strong>Territoriale</strong></td><td>Fait commis sur le territoire</td><td>Plénitude + Exclusivité (Île de Palmas)</td></tr>
+    <tr><td><strong>Personnelle active</strong></td><td>Nationalité de l'auteur</td><td>Même si infraction à l'étranger</td></tr>
+    <tr><td><strong>Personnelle passive</strong></td><td>Nationalité de la victime</td><td>Même si faits à l'étranger</td></tr>
+    <tr><td><strong>Réelle</strong></td><td>Atteinte aux intérêts essentiels</td><td>Ex. espionnage</td></tr>
+    <tr><td><strong>Universelle relative</strong></td><td>Présence de l'auteur sur le territoire</td><td>Peu importe lieu/nationalité</td></tr>
+    <tr><td><strong>Universelle absolue</strong></td><td>Aucune condition (in absentia)</td><td>Crimes graves uniquement</td></tr>
+  </table>
+
+  <hr class="divider">
+
+  <div class="section-title">3. Immunités de l'État</div>
+
+  <div class="cards-grid">
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">PAR IN PAREM</span>
+        <span class="card-title">Immunités Juridictionnelles</span>
+      </div>
+      <div class="card-body">
+        <p><em>Par in parem non habet imperium</em> : un égal n'a pas autorité sur un égal.</p>
+        <br>
+        <p><strong>Immunité restreinte :</strong></p>
+        <p><span class="tag">Jure imperii</span> actes souverains → IMMUNITÉ</p>
+        <p><span class="tag red">Jure gestionis</span> actes commerciaux (personne privée) → PAS D'IMMUNITÉ</p>
+        <br>
+        <p><strong>Exception territoriale :</strong> pas d'immunité pour action en réparation (décès, atteinte physique, dommage matériel) si l'acte s'est produit sur le territoire du for.</p>
+        <br>
+        <p><strong>Immunité d'exécution ≠ immunité de juridiction :</strong> on peut parfois juger... mais pas contraindre. Protection des ambassades, comptes diplomatiques, biens militaires.</p>
+      </div>
+    </div>
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">AFFAIRE YÉRODIA 2002</span>
+        <span class="card-title">Immunités des Représentants</span>
+      </div>
+      <div class="card-body">
+        <p><strong>Ratione personae (personnelle) :</strong> Chef d'État, Chef de gouvernement, MAE → protection TOTALE (actes privés + officiels) pendant le mandat. Disparaît après (sauf actes officiels).</p>
+        <br>
+        <p><strong>Ratione materiae (fonctionnelle) :</strong> Tous agents. Protège uniquement les actes officiels. Perdure après la fin des fonctions.</p>
+        <br>
+        <div class="alert red"><div class="alert-icon">🔥</div><div><strong>Évolution 2025 :</strong> Cour de cassation (Ass. plén., 25 juil. 2025) — l'immunité fonctionnelle (ratione materiae) ne peut être opposée en cas de génocide, crimes contre l'humanité et crimes de guerre.</div></div>
+        <br>
+        <p><strong>Exceptions :</strong> devant la CPI (art. 27 Statut Rome) · Si l'État lève l'immunité · Devant juridiction nationale de son propre État.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-title">4. Responsabilité Internationale</div>
+
+  <div class="cards-grid">
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">CDI 2001 · ART. 1 & 2</span>
+        <span class="card-title">Conditions de la Responsabilité</span>
+      </div>
+      <div class="card-body">
+        <p><strong>2 conditions (art. 2) :</strong></p>
+        <p>① Comportement attribuable à l'État</p>
+        <p>② Violation d'une obligation internationale</p>
+        <br>
+        <div class="alert gold"><div class="alert-icon">💡</div><div>La <strong>faute, le dommage et le lien de causalité</strong> ne sont PAS des conditions nécessaires (contrairement au droit interne).</div></div>
+        <br>
+        <p><strong>Attribution :</strong> actes des organes officiels (art. 4) · entités à prérogatives de puissance publique (art. 5) · actes ultra vires (art. 7) · direction/contrôle de l'État (art. 8).</p>
+        <br>
+        <p><strong>6 circonstances excluant l'illicéité :</strong></p>
+        <p><span class="tag">Consentement</span> <span class="tag">Légitime défense</span> <span class="tag">Contre-mesures</span></p>
+        <p><span class="tag">Force majeure</span> <span class="tag">Détresse</span> <span class="tag">État de nécessité</span></p>
+      </div>
+    </div>
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">ART. 34 CDI</span>
+        <span class="card-title">Réparation du Préjudice</span>
+      </div>
+      <div class="card-body">
+        <p><strong>3 modes :</strong></p>
+        <p><span class="tag">Restitution</span> remettre en état initial (rarement possible)</p>
+        <p><span class="tag">Indemnisation</span> compensation financière (si restitution impossible)</p>
+        <p><span class="tag">Satisfaction</span> excuse politique / mesure symbolique</p>
+        <br>
+        <p><strong>Conditions :</strong> dommage (matériel ou moral) + lien de causalité avec le fait illicite.</p>
+        <br>
+        <p><strong>Autres conséquences :</strong></p>
+        <p>· Cessation (si fait continu)</p>
+        <p>· Assurances et garanties de non-répétition (AGNR — si circonstances l'exigent)</p>
+      </div>
+    </div>
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">ART. 42 & 48 CDI</span>
+        <span class="card-title">Invocation de la Responsabilité</span>
+      </div>
+      <div class="card-body">
+        <p><strong>Art. 42 — État lésé :</strong> peut invoquer la responsabilité et demander l'exécution de TOUTES les obligations secondaires.</p>
+        <br>
+        <p><strong>Art. 48 — États non lésés :</strong> possible si obligation erga omnes (due à la communauté internationale) ou erga omnes partes (traité multilatéral). Mais ne peuvent demander que cessation + AGNR. Ex. : Afrique du Sud c. Israël 2023.</p>
+        <br>
+        <div class="alert gold"><div class="alert-icon">⚠️</div><div><strong>À ne pas confondre !</strong> Jus cogens → toujours erga omnes. Erga omnes → pas nécessairement jus cogens. Et ni l'un ni l'autre ne confèrent automatiquement compétence à la CIJ.</div></div>
+        <br>
+        <p><strong>Violations graves (art. 40-41) :</strong> violation grave d'une norme impérative → 3 obligations pour TOUS les États : non-reconnaissance · pas d'aide/assistance · coopération pour faire cesser.</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<!-- FIN MODULE DIP -->
+
+<!-- ═══════════════════════════════════════ -->
+<!-- MODULE 4 : THÉORIE DU DROIT            -->
+<!-- ═══════════════════════════════════════ -->
+<div class="module" id="module-td">
+
+  <div class="section-title">Théorie du Droit</div>
+  <div class="section-meta">M. COTTERAU · 2 questions à l'examen</div>
+
+  <div class="alert gold"><div class="alert-icon">💡</div><div><strong>Kelsen (1926) :</strong> "Mon but est d'élever la théorie du droit au rang d'une véritable science." Rupture avec la philosophie du droit jusnaturaliste → positivisme juridique.</div></div>
+
+  <hr class="divider">
+
+  <div class="section-title">1. Philosophie vs Théorie du Droit</div>
+
+  <div class="cards-grid">
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">DISTINCTION KELSEN</span>
+        <span class="card-title">3 Discours Juridiques</span>
+      </div>
+      <div class="card-body">
+        <p><strong>① Science du droit positif :</strong> décrit le droit en vigueur dans un système donné. Discours descriptif.</p>
+        <br>
+        <p><strong>② Théorie du droit :</strong> explique de manière générale et abstraite le droit et son fonctionnement. Exempt de toute idéologie politique. Neutralité éthique.</p>
+        <br>
+        <p><strong>③ Philosophie du droit :</strong> se préoccupe des questions de justice. Critique ou légitime politiquement/moralement un système.</p>
+        <br>
+        <div class="alert blue"><div class="alert-icon">📌</div><div><strong>Aujourd'hui :</strong> la distinction est dépassée. Travailler sur la nature du droit, c'est déjà de la philosophie (Marmor). Théoriciens et philosophes utilisent indifféremment les deux termes.</div></div>
+      </div>
+    </div>
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">COURANTS</span>
+        <span class="card-title">Jusnaturalisme vs Positivisme</span>
+      </div>
+      <div class="card-body">
+        <p><strong>Jusnaturalisme :</strong> il existe un droit naturel, supérieur au droit positif, fondé sur la raison ou la nature humaine. Le droit positif injuste peut être contesté.</p>
+        <br>
+        <p><strong>Positivisme juridique :</strong> le droit c'est ce qui est posé par les autorités compétentes. Séparation stricte du droit et de la morale. Pas de droit naturel.</p>
+        <br>
+        <p><strong>Kelsen — Théorie Pure du Droit (1934) :</strong> le droit est un système de normes hiérarchisées. Chaque norme tire sa validité d'une norme supérieure. Au sommet : la <span class="hl">norme fondamentale hypothétique</span> (Grundnorm).</p>
+        <br>
+        <p><strong>Hart :</strong> positivisme souple. La règle de reconnaissance détermine ce qui est du droit dans un système. Distinction règles primaires (conduites) / secondaires (sur les règles).</p>
+      </div>
+    </div>
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">OBJET</span>
+        <span class="card-title">Philo du Droit ≠ Philo Politique ≠ Éthique</span>
+      </div>
+      <div class="card-body">
+        <p><strong>Philosophie du droit :</strong> analyse générale et abstraite — vérités sur le droit indépendamment d'un système particulier. Qu'est-ce que le droit ?</p>
+        <br>
+        <p><strong>Philosophie politique :</strong> question centrale = comment déployer ou limiter le pouvoir ? S'intéresse à l'État, aux libertés, à la démocratie. Normatif (ce qui devrait être).</p>
+        <br>
+        <p><strong>Éthique appliquée / Morale :</strong> comment agir bien ? Fondements des comportements individuels.</p>
+        <br>
+        <p>Le droit est un outil de régulation des conduites — instrument du pouvoir politique. Les trois disciplines se recoupent mais ont des objets distincts.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-title">2. Sources du Droit</div>
+
+  <div class="cards-grid">
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">HIÉRARCHIE</span>
+        <span class="card-title">Les Sources Formelles</span>
+      </div>
+      <div class="card-body">
+        <p><strong>Sources formelles = sources qui confèrent à une règle sa validité juridique.</strong></p>
+        <br>
+        <p>La hiérarchie des normes (Kelsen) :</p>
+        <div class="formula">Constitution
+▼ Traités internationaux
+▼ Lois organiques
+▼ Lois ordinaires / Ordonnances
+▼ Règlements (décrets, arrêtés)
+▼ Actes individuels</div>
+        <br>
+        <p><strong>Coutume :</strong> pratique générale + opinio juris (conviction d'obligation). En DI : source principale à côté des traités.</p>
+        <br>
+        <p><strong>Jurisprudence :</strong> en droit français, pas formellement source (art. 5 C.Civ interdit les arrêts de règlement) mais rôle normatif réel reconnu.</p>
+        <br>
+        <p><strong>Doctrine :</strong> source matérielle, influence sans force obligatoire.</p>
+      </div>
+    </div>
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">INTERPRÉTATION</span>
+        <span class="card-title">L'Interprétation du Droit</span>
+      </div>
+      <div class="card-body">
+        <p><strong>Problème :</strong> le droit est formulé en langage naturel → ambiguïté inévitable. Qui interprète ? Le juge.</p>
+        <br>
+        <p><strong>Méthodes d'interprétation :</strong></p>
+        <p><span class="tag">Littérale</span> sens grammatical des mots</p>
+        <p><span class="tag">Téléologique</span> but, finalité de la loi</p>
+        <p><span class="tag">Systématique</span> cohérence avec l'ensemble du droit</p>
+        <p><span class="tag">Historique</span> intention du législateur</p>
+        <br>
+        <p><strong>Hart vs Dworkin :</strong></p>
+        <p>Hart : le droit a des <em>zones de pénombre</em> où le juge a un pouvoir discrétionnaire (crée du droit).</p>
+        <p>Dworkin : le juge ne crée pas — il découvre toujours la <em>bonne réponse</em> via les principes.</p>
+      </div>
+    </div>
+
+    <div class="card collapsible" onclick="toggle(this)">
+      <div class="card-head">
+        <span class="card-num">VALIDITÉ</span>
+        <span class="card-title">Validité, Efficacité & Légitimité</span>
+      </div>
+      <div class="card-body">
+        <p><strong>Validité :</strong> la règle respecte les conditions formelles de production (compétence + procédure). Conception kelsenienne.</p>
+        <br>
+        <p><strong>Efficacité :</strong> la règle est effectivement appliquée et respectée. Une règle peut être valide sans être efficace.</p>
+        <br>
+        <p><strong>Légitimité :</strong> la règle est acceptée comme juste/obligatoire par ses destinataires. Question de la philosophie politique.</p>
+        <br>
+        <div class="alert gold"><div class="alert-icon">💡</div><div>Ces 3 dimensions sont distinctes : une règle injuste peut être valide et efficace. Une règle légitime peut être invalide. La théorie du droit analyse surtout la validité — la philosophie du droit questionne la légitimité.</div></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<!-- FIN MODULE TD -->
+
+<!-- ═══════════════════════════════════════ -->
+<!-- MODULE QUIZ                            -->
+<!-- ═══════════════════════════════════════ -->
+<div class="module" id="module-quiz">
+
+  <div class="section-title">Quiz Partiel</div>
+  <div class="section-meta">Teste tes connaissances · 12 questions · Toutes matières</div>
+
+  <div id="score-zone" style="margin-bottom:24px;">
+    <div class="score-bar"><div class="score-fill" id="score-fill" style="width:0%"></div></div>
+    <div class="score-txt" id="score-txt">0 / 12</div>
+  </div>
+
+  <!-- Q1 -->
+  <div class="quiz-question" id="q1">
+    <div class="quiz-q">1. Une condition dont la réalisation dépend exclusivement de la volonté du débiteur est :</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(this,'wrong','q1')">A. Casuelle — valide</button>
+      <button class="quiz-opt" onclick="answer(this,'correct','q1')">B. Potestative — nulle (art. 1304-2)</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q1')">C. Mixte — valide</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q1')">D. Résolutoire — valide</button>
+    </div>
+    <div class="quiz-explain" id="exp-q1"><strong>Art. 1304-2 :</strong> est nulle l'obligation contractée sous une condition dont la réalisation dépend de la seule volonté du débiteur. Ex : "je vends si j'en ai envie" → nul car aucun engagement sérieux.</div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="quiz-question" id="q2">
+    <div class="quiz-q">2. Depuis l'ordonnance du 12 mars 2025, la nullité d'une société ne peut résulter que :</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(this,'wrong','q2')">A. D'un objet social illicite</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q2')">B. D'un vice du consentement de l'un des associés</button>
+      <button class="quiz-opt" onclick="answer(this,'correct','q2')">C. De l'incapacité de tous les fondateurs ou de la violation du nombre minimal de 2 associés</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q2')">D. D'un défaut d'apport</button>
+    </div>
+    <div class="quiz-explain" id="exp-q2"><strong>Art. 1844-10 C.Civ (rénové) :</strong> 2 causes exclusives de nullité. L'illicéité de l'objet social n'entraîne plus la nullité — la clause est réputée non écrite.</div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="quiz-question" id="q3">
+    <div class="quiz-q">3. Selon la théorie déclarative de la reconnaissance (majoritaire en DI) :</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(this,'wrong','q3')">A. Un État n'existe que si d'autres États le reconnaissent</button>
+      <button class="quiz-opt" onclick="answer(this,'correct','q3')">B. L'État existe dès que les critères objectifs sont réunis — la reconnaissance le rend opposable</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q3')">C. La reconnaissance crée l'État</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q3')">D. L'ONU doit approuver la naissance d'un État</button>
+    </div>
+    <div class="quiz-explain" id="exp-q3"><strong>Commission Badinter :</strong> "la reconnaissance n'est pas une condition de l'existence de l'État." L'État existe dès territoire + population + gouvernement effectif.</div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="quiz-question" id="q4">
+    <div class="quiz-q">4. La condition suspensive :</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(this,'wrong','q4')">A. Anéantit l'obligation à sa réalisation</button>
+      <button class="quiz-opt" onclick="answer(this,'correct','q4')">B. Rend l'obligation pure et simple à sa réalisation</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q4')">C. Suspend l'exécution d'une obligation existante</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q4')">D. Est toujours potestative</button>
+    </div>
+    <div class="quiz-explain" id="exp-q4"><strong>Art. 1304 :</strong> "La condition est suspensive lorsque son accomplissement rend l'obligation pure et simple." L'obligation est en attente — si la condition se réalise, elle produit ses effets.</div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="quiz-question" id="q5">
+    <div class="quiz-q">5. L'immunité personnelle (ratione personae) d'un chef d'État en exercice :</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(this,'wrong','q5')">A. Protège uniquement ses actes officiels</button>
+      <button class="quiz-opt" onclick="answer(this,'correct','q5')">B. Protège tous ses actes (privés + officiels) pendant son mandat</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q5')">C. Disparaît si accusé de crimes contre l'humanité</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q5')">D. S'applique uniquement devant la CIJ</button>
+    </div>
+    <div class="quiz-explain" id="exp-q5"><strong>Affaire Yérodia (CIJ 2002) :</strong> protection absolue pendant le mandat. Attention : depuis Cass. Ass. plén. 2025, l'immunité fonctionnelle (ratione materiae) cède devant génocide/crimes contre l'humanité/crimes de guerre pour les anciens représentants.</div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="quiz-question" id="q6">
+    <div class="quiz-q">6. La subrogation personnelle permet :</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(this,'wrong','q6')">A. De transférer une créance à un tiers avec l'accord du débiteur</button>
+      <button class="quiz-opt" onclick="answer(this,'correct','q6')">B. Au tiers qui a payé d'être subrogé dans les droits du créancier</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q6')">C. D'éteindre définitivement la dette</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q6')">D. De modifier l'objet de l'obligation</button>
+    </div>
+    <div class="quiz-explain" id="exp-q6">La subrogation ≠ cession de créance. Le tiers payeur prend la place du créancier et peut poursuivre le débiteur. Subrogation légale (caution, codébiteur) ou conventionnelle.</div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="quiz-question" id="q7">
+    <div class="quiz-q">7. Selon Kelsen, la "Théorie pure du droit" vise à :</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(this,'wrong','q7')">A. Trouver le système juridique le plus juste</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q7')">B. Défendre le droit naturel</button>
+      <button class="quiz-opt" onclick="answer(this,'correct','q7')">C. Élever la théorie du droit au rang d'une science, exempt de toute idéologie politique</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q7')">D. Unifier les systèmes juridiques nationaux</button>
+    </div>
+    <div class="quiz-explain" id="exp-q7">Kelsen : neutralité éthique + empirisme. Le droit est étudié comme système de normes hiérarchisées indépendamment de la morale ou de la politique. Opposition radicale au jusnaturalisme.</div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="quiz-question" id="q8">
+    <div class="quiz-q">8. En droit des sociétés, la distinction société de personnes / société de capitaux implique :</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(this,'wrong','q8')">A. Que les actions des sociétés de personnes sont librement cessibles</button>
+      <button class="quiz-opt" onclick="answer(this,'correct','q8')">B. Que les sociétés de personnes ont une responsabilité illimitée et les parts non librement cessibles</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q8')">C. Que les sociétés de capitaux paient l'impôt sur le revenu</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q8')">D. Que la SCI est une société de capitaux</button>
+    </div>
+    <div class="quiz-explain" id="exp-q8">Sociétés de personnes (SNC) : intuitu personae fort, responsabilité illimitée et solidaire, parts non librement cessibles, IS transparent (impôt sur les associés). Sociétés de capitaux (SA, SAS) : actions librement négociables, IS à 25%.</div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="quiz-question" id="q9">
+    <div class="quiz-q">9. En matière de responsabilité internationale, les 2 conditions du fait illicite sont :</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(this,'wrong','q9')">A. La faute + le dommage</button>
+      <button class="quiz-opt" onclick="answer(this,'correct','q9')">B. Attribution à l'État + violation d'une obligation internationale</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q9')">C. L'intention + le préjudice causé</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q9')">D. La faute + le lien de causalité</button>
+    </div>
+    <div class="quiz-explain" id="exp-q9"><strong>Art. 2 CDI 2001 :</strong> comportement attribuable à l'État + violation d'une obligation internationale. La faute, le dommage et le lien de causalité ne sont pas des conditions.</div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="quiz-question" id="q10">
+    <div class="quiz-q">10. La prescription de droit commun des actions personnelles est de :</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(this,'wrong','q10')">A. 10 ans</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q10')">B. 2 ans</button>
+      <button class="quiz-opt" onclick="answer(this,'correct','q10')">C. 5 ans (art. 2224 C.Civ)</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q10')">D. 30 ans</button>
+    </div>
+    <div class="quiz-explain" id="exp-q10"><strong>Art. 2224 :</strong> 5 ans à compter du jour où le titulaire a connu ou aurait dû connaître les faits. Délais spéciaux : 10 ans (dommages corporels), 30 ans (immobilier réel).</div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="quiz-question" id="q11">
+    <div class="quiz-q">11. La compensation légale requiert des dettes :</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(this,'wrong','q11')">A. Réciproques et de même montant</button>
+      <button class="quiz-opt" onclick="answer(this,'correct','q11')">B. Réciproques, certaines, liquides et exigibles</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q11')">C. Réciproques et de même nature</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q11')">D. Certaines et homogènes uniquement</button>
+    </div>
+    <div class="quiz-explain" id="exp-q11"><strong>Art. 1347 :</strong> dettes réciproques + certaines + liquides (montant déterminé) + exigibles. La compensation opère de plein droit dès réunion des conditions.</div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="quiz-question" id="q12">
+    <div class="quiz-q">12. Le principe "par in parem non habet imperium" signifie :</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(this,'wrong','q12')">A. Un État peut être jugé par un tribunal étranger</button>
+      <button class="quiz-opt" onclick="answer(this,'correct','q12')">B. Un égal n'a pas autorité sur un égal — un État ne peut pas exercer sa juridiction sur un autre</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q12')">C. Les États sont hiérarchisés selon leur puissance</button>
+      <button class="quiz-opt" onclick="answer(this,'wrong','q12')">D. Les organisations internationales ont les mêmes droits que les États</button>
+    </div>
+    <div class="quiz-explain" id="exp-q12">Principe fondateur des immunités de juridiction des États. Découle du principe d'égalité souveraine (art. 2§1 Charte ONU). Empêche qu'un tribunal national juge un État étranger.</div>
+  </div>
+
+</div>
+<!-- FIN MODULE QUIZ -->
+
+<footer class="footer">
+  © 2026 · RÉVISION DROIT S6 · Tous droits réservés
+</footer>
+
+<script>
+// NAV
+function showModule(id) {
+  document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('module-' + id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// COLLAPSIBLE
+function toggle(el) {
+  el.classList.toggle('open');
+}
+
+// QUIZ
+let correct = 0;
+let answered = {};
+
+function answer(btn, result, qid) {
+  if (answered[qid]) return;
+  answered[qid] = true;
+
+  const opts = btn.closest('.quiz-question').querySelectorAll('.quiz-opt');
+  opts.forEach(o => { o.disabled = true; });
+  btn.classList.add(result);
+  if (result === 'wrong') {
+    opts.forEach(o => {
+      if (o.onclick.toString().includes("'correct'")) o.classList.add('correct');
+    });
+  }
+
+  document.getElementById('exp-' + qid).classList.add('show');
+
+  if (result === 'correct') correct++;
+  const total = Object.keys(answered).length;
+  const pct = (correct / 12) * 100;
+  document.getElementById('score-fill').style.width = pct + '%';
+  document.getElementById('score-txt').textContent = correct + ' / 12 — ' + total + ' réponses';
+}
+</script>
+</body>
+</html>
